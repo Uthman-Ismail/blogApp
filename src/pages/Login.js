@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import '../style/login.css';
+import { login } from '../server/auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add login logic here
-    console.log('Logging in with', email, password);
+    const user = await login(email, password);
+    console.log('Logging in: ', user);
   };
 
   return (
