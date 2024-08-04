@@ -5,6 +5,8 @@ import About from './pages/About';
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from './pages/Home';
+import CreatePost from './pages/CreatePost';
+import UpdatePost from './pages/UpdatePost';
 
 const App = () => {
  
@@ -17,6 +19,8 @@ const App = () => {
                 <Route exact path="/" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/create" element={<CreatePost />} />
+                <Route path="/update/:id" element={<UpdatePost />} />
             </Routes>
         </Router>
     </div>

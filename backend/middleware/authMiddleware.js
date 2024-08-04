@@ -1,11 +1,11 @@
-import { verifyToken } from "../auth";
+import { verifyToken } from "../auth.js";
 
 const jwt_secret = process.env.JWT_SECRET;
 
 const authMiddleware = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+    const authHeader = req.headers['authorization'];
     if(!authHeader){
-        return res.status(401).json({ message: 'Authorization header missing' });
+        return res.status(401).json({ message: 'Authorization header missin' });
     }
 
     const token = authHeader.split(' ')[1];
@@ -17,3 +17,5 @@ const authMiddleware = (req, res, next) => {
         return res.status(401).json({ message: 'Invalid token' });
     }
 }
+
+export default authMiddleware;

@@ -8,14 +8,16 @@ const SignUp = () => {
   const [name, setName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    console.log(name, email, password);
     e.preventDefault();
     
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;
     }
-    const newUser = register(name, email, password);
+    
+    const newUser = await register(name, email, password);
     console.log('Signing up: ', newUser);
   };
 
@@ -39,7 +41,7 @@ const SignUp = () => {
           <label>Confirm Password:</label>
           <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
         </div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" value="Submit">Sign Up</button>
       </form>
     </div>
   );

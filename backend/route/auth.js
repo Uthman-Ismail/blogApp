@@ -10,7 +10,7 @@ router.post('/register', async (req, res) => {
 
     const existingUser = await prisma.user.findUnique({where: {email: email}});
     if(existingUser){
-        return res.status(400).json({ message: 'Email already in use' });
+        return ;
     }
 
     const {name, password} = req.body;
@@ -26,12 +26,16 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ message: 'User registered', user });
 });
 
+router.get('/register', (req, res) => {
+    res.send('welcome')
+})
+
 router.post('/login', async (req, res) => {
     const {email, password} = req.body;
 
     const user = await prisma.user.findUnique({where: {email: email}});
     if(!user || !(await comparePassword(password, user.password))) {
-        return res.status(400).json({ message: 'Invalid email or password' });
+        return ;
     }
 
     const token = generateToken(user);

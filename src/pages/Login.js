@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import '../style/login.css';
 import { login } from '../server/auth';
+import { useNavigate } from 'react-router-dom'; 
+
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const user = await login(email, password);
     console.log('Logging in: ', user);
+    if(user.token){
+      localStorage.setItem('token', user.token);
+      navigate('/');  // Navigate to home page after successful login
+    }
   };
 
   return (
