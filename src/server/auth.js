@@ -3,7 +3,7 @@ import api from './api';
 export const register = async (name, email, password) => {
   try {
     const response = await api.post('/auth/register', { name, email, password });
-    if(!response.data){
+    if(!response){
       return;
     }
     return response.data;

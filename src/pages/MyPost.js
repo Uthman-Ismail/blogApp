@@ -2,28 +2,45 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import '../style/post.css'
 
 const MyPost = () => {
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchMyPosts = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/posts/mine', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setPosts(response.data);
-      } catch (error) {
-        console.error('Error fetching my posts', error);
-        if (error.response.status === 401) {
-          navigate('/login');  // Redirect to login if not authenticated
+  const handleDelete = async (id) => {
+    const token = localStorage.getItem('token'); // Assuming the JWT token is stored in localStorage
+
+    try {
+      await axios.delete(`http://localhost:3000/posts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      alert('Post deleted successfully');
+      fetchMyPosts(); 
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      alert('Failed to delete post');
+    }
+  };
+
+  const fetchMyPosts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:3000/posts/mine', {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      }
-    };
+      });
+      setPosts(response.data);
+    } catch (error) {
+      console.error('Error fetching my posts', error);         
+    }
+};  
+
+  useEffect(() => {   
     fetchMyPosts();
   }, [navigate]);
 
@@ -33,17 +50,20 @@ const MyPost = () => {
       <Link to="/create">
         <button>Create New Post</button>
       </Link>
-      <ul>
+      <div className="posts-list">
         {posts.map(post => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
+          <div className="post-card" key={post.id}>
+            <Link to={`/post/${post.id}`} className="post-link">
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+            </Link>
             <Link to={`/update/${post.id}`}>
               <button>Edit</button>
             </Link>
-          </li>
+            <button onClick={() => handleDelete(post.id)}>delete</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

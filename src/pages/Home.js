@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from "react";
 //import CardContainer from "../component/CardContainer";
 //import { cardData } from "../data";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import About from "./About";
+import '../style/post.css'
 import api from "../server/api";
 
 const Home = () => {
@@ -34,14 +35,16 @@ const Home = () => {
         <div>
             <h1>All Posts</h1>
             <button onClick={handleCreatePostClick}>Create New Post</button>
-            <ul>
-                {posts.map(post => (
-                    <li key={post.id}>
-                        <h2>{post.title}</h2>
-                        <p>{post.content}</p>
-                    </li>
-                 ))}
-            </ul>
+            <div className="posts-list">
+        {posts.map(post => (
+          <div className="post-card" key={post.id}>
+            <Link to={`/post/${post.id}`} className="post-link">
+              <h2>{post.title}</h2>
+              <p>{post.description}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
             <About />
         </div>
     )

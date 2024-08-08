@@ -1,12 +1,11 @@
-// src/pages/CreatePost.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const CreatePost = () => {
+const BlogPostForm = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [tags, setTags] = useState('');
+  const [description, setDescription] = useState('');
   const navigate = useNavigate();
   const { postId } = useParams();
 
@@ -22,7 +21,7 @@ const CreatePost = () => {
           });
           setTitle(response.data.title);
           setContent(response.data.content);
-          setTags(response.data.tags.join(', '));
+          setDescription(response.data.description)
         } catch (error) {
           console.error('Error fetching post data', error);
         }
@@ -35,9 +34,10 @@ const CreatePost = () => {
     e.preventDefault();
     const postData = {
       title,
-      content,
-      tags: tags.split(',').map(tag => tag.trim()),
+      description,
+      content
     };
+    console.log(postData.description);
     const token = localStorage.getItem('token');
 
     try {
@@ -59,7 +59,6 @@ const CreatePost = () => {
 
   return (
     <div className="container">
-      <h1>{postId ? 'Update Post' : 'Create Post'}</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title:</label>
@@ -71,6 +70,14 @@ const CreatePost = () => {
           />
         </div>
         <div>
+          <label>Description:</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div>
           <label>Content:</label>
           <textarea
             value={content}
@@ -78,18 +85,11 @@ const CreatePost = () => {
             required
           />
         </div>
-        <div>
-          <label>Tags (comma separated):</label>
-          <input
-            type="text"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-          />
-        </div>
+        
         <button type="submit">{postId ? 'Update Post' : 'Create Post'}</button>
       </form>
     </div>
   );
 };
 
-export default CreatePost;
+export default BlogPostForm;

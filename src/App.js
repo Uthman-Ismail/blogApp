@@ -7,6 +7,8 @@ import SignUp from "./pages/SignUp";
 import Home from './pages/Home';
 import CreatePost from './pages/CreatePost';
 import UpdatePost from './pages/UpdatePost';
+import FullPost from './pages/FullPost';
+import MyPost from './pages/MyPost';
 
 const App = () => {
  
@@ -20,7 +22,9 @@ const App = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/create" element={<CreatePost />} />
-                <Route path="/update/:id" element={<UpdatePost />} />
+                <Route path="/update/:postId" element={<UpdatePost />} />
+                <Route path="/post/:id" element={<FullPost />} /> 
+                <Route path='myPost' element={<MyPost />} />
             </Routes>
         </Router>
     </div>

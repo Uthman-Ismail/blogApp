@@ -8,10 +8,10 @@ const router = express.Router();
 
 // Create a blog post
 router.post('/', authMiddleware, async (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, description } = req.body;
   const { userId } = req.user;
   const post = await prisma.blogPost.create({
-    data: { title, content, authorId: userId },
+    data: { title, description, content, authorId: userId },
   });
   res.status(201).json(post);
 });
@@ -26,6 +26,7 @@ router.get('/', async (req, res) => {
   if (search) {
     where.OR = [
       { title: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
       { content: { contains: search, mode: 'insensitive' } },
     ];
   }
@@ -43,6 +44,29 @@ router.get('/', async (req, res) => {
   });
 
   res.json(posts);
+});
+
+router.get('/mine', authMiddleware, async (req, res) => {
+    const { userId } = req.user;
+    const authorId = userId;
+    try {
+      const posts = await prisma.blogPost.findMany({
+        where: {
+          authorId: parseInt(authorId, 10), // Convert authorId to an integer
+        },
+        include: {
+          author: true, // Optional: Include author details if needed
+        },
+      });
+  
+      if (posts.length === 0) {
+        return res.status(404).json({ message: 'No posts found for this author' });
+      }
+  
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving posts', error });
+    }
 });
 
 // Get a single blog post
@@ -64,7 +88,7 @@ router.get('/:id', async (req, res) => {
 // Update a blog post
 router.put('/:id', authMiddleware, async (req, res) => {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { title, content, description } = req.body;
   const { userId } = req.user;
 
   const post = await prisma.blogPost.findUnique({
@@ -77,7 +101,7 @@ router.put('/:id', authMiddleware, async (req, res) => {
 
   const updatedPost = await prisma.blogPost.update({
     where: { id: parseInt(id) },
-    data: { title, content },
+    data: { title, content, description },
   });
 
   res.json(updatedPost);

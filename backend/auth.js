@@ -13,7 +13,7 @@ export const comparePassword = (password, hashedPassword) => {
 }
 
 export const generateToken = (user) => {
-    return jwt.sign({userId: user.id}, jwt_secret, {expiresIn: '3 days'});
+    return jwt.sign({userId: user.id}, jwt_secret, {expiresIn: '7 days'});
 }
 
 export const verifyToken = (token) => {
