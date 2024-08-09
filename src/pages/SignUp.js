@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import '../style/signup.css';
 import { register } from '../server/auth';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     console.log(name, email, password);
@@ -18,7 +20,10 @@ const SignUp = () => {
     }
     
     const newUser = await register(name, email, password);
-    console.log('Signing up: ', newUser);
+    console.log('user ', newUser);
+    alert('Registration sucessful');
+    navigate('/login');
+
   };
 
   return (

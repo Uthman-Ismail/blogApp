@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import '../style/blogPostForm.css'
 
 const BlogPostForm = () => {
   const [title, setTitle] = useState('');
@@ -50,7 +51,7 @@ const BlogPostForm = () => {
       } else {
         await axios.post('http://localhost:3000/posts', postData, { headers });
       }
-
+      alert('Blog posted');
       navigate('/');
     } catch (error) {
       console.error('Error creating/updating post', error);

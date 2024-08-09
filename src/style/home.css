@@ -1,0 +1,79 @@
+/* home.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    color: #343a40;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 0 auto 30px auto;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.posts-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.post-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.post-link {
+    text-decoration: none;
+    color: #343a40;
+    display: block;
+    padding: 20px;
+}
+
+.post-link h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.post-link p {
+    font-size: 16px;
+    color: #6c757d;
+    line-height: 1.5;
+}
+
+.post-link:hover h2 {
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .posts-list {
+        grid-template-columns: 1fr;
+    }
+}

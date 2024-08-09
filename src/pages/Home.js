@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from "react";
-//import CardContainer from "../component/CardContainer";
-//import { cardData } from "../data";
 import { useNavigate, Link } from 'react-router-dom';
 import About from "./About";
-import '../style/post.css'
+import '../style/post.css';
+import '../style/home.css';
 import api from "../server/api";
 
 const Home = () => {

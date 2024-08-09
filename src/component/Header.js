@@ -10,9 +10,9 @@ const Header = () => {
 
    const handleLogout = () => {
     localStorage.removeItem('token');
-
-    navigate('/');
+    navigate('/'); //go to home after logout
   };
+
     return (
     <header>
         <div className="logo">
@@ -24,8 +24,8 @@ const Header = () => {
             <Link to="/">About</Link>
             {token ? (
                     <div>
-                        <button onClick={handleLogout}>Logout</button>
                         <Link to="/myPost">My Post</Link>
+                        <button onClick={handleLogout}>Logout</button>
                     </div>
                 ) : (
                     <div>

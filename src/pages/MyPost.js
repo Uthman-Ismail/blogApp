@@ -1,4 +1,3 @@
-// src/pages/MyPosts.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
@@ -45,7 +44,7 @@ const MyPost = () => {
   }, [navigate]);
 
   return (
-    <div className="container">
+    <div className="contain">
       <h1>My Posts</h1>
       <Link to="/create">
         <button>Create New Post</button>
@@ -58,9 +57,9 @@ const MyPost = () => {
               <p>{post.description}</p>
             </Link>
             <Link to={`/update/${post.id}`}>
-              <button>Edit</button>
+              <button className='btn'>Edit</button>
             </Link>
-            <button onClick={() => handleDelete(post.id)}>delete</button>
+            <button className='btn' onClick={() => handleDelete(post.id)}>delete</button>
           </div>
         ))}
       </div>
