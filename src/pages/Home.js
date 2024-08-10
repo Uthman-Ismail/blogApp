@@ -39,6 +39,7 @@ const Home = () => {
           <div className="post-card" key={post.id}>
             <Link to={`/post/${post.id}`} className="post-link">
               <h2>{post.title}</h2>
+              <p style={{fontWeight : 700}}>posted by {post.author.name} @ {post.updatedAt.slice(0,10)}</p>
               <p>{post.description}</p>
             </Link>
           </div>

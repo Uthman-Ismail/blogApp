@@ -11,11 +11,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = await login(email, password);
-    console.log('Logging in: ', user);
-    if(user.token){
-      localStorage.setItem('token', user.token);
-      navigate('/');  // Navigate to home page after successful login
+    try{
+      const user = await login(email, password);
+      console.log('Logging in: ', user);
+      console.log('I am pressed 3') 
+      
+      if(user.token){
+        console.log(user)
+        localStorage.setItem('token', user.token);
+        navigate('/');  // Navigate to home page after successful login
+      }
+    }catch(err){
+
     }
   };
 

@@ -26,9 +26,6 @@ router.post('/register', async (req, res) => {
     res.status(201).json({ message: 'User registered', user });
 });
 
-router.get('/register', (req, res) => {
-    res.send('welcome')
-})
 
 router.post('/login', async (req, res) => {
     const {email, password} = req.body;
