@@ -28,15 +28,32 @@ router.post('/register', async (req, res) => {
 
 
 router.post('/login', async (req, res) => {
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({where: {email: email}});
-    if(!user || !(await comparePassword(password, user.password))) {
-        return ;
+    try {
+        const user = await prisma.user.findUnique({ where: { email } });
+
+        if (!user) {
+            // User with the provided email was not found
+            return res.status(401).json({ message: 'User not found' });
+        }
+
+        const isPasswordValid = await comparePassword(password, user.password);
+        if (!isPasswordValid) {
+            // Password is incorrect\
+            return res.status(401).json({ message: 'Incorrect password' });   
+        }
+
+        // Generate token since the email and password are valid
+        const token = generateToken(user);
+        res.json({ message: 'Login successful', token });
+
+    } catch (err) {
+        // Handle any unexpected errors
+        console.error('Error during login:', err);
+        return res.status(500).json({ message: 'Internal server error' });
     }
-
-    const token = generateToken(user);
-    res.json({ message: 'Login successful', token });
 });
+
 
 export default router;
